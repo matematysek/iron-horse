@@ -476,6 +476,13 @@ def main():
                     ("COLOUR_RED", "COLOUR_WHITE"),
                 ],
             },
+            {
+                "relative_spriterow_num": 3,
+                "remap_to_cc_cabbage": ["COLOUR_RED", "COLOUR_YELLOW"],
+                "docs_image_input_cc": [
+                    ("COLOUR_RED", "COLOUR_WHITE"),
+                ],
+            },
         ],
         diesel_railcar_mail_liveries=[
             {
@@ -533,22 +540,26 @@ def main():
         ],
         dvt_mail_liveries=[
             {
+                "CABBAGE": "CABBAGE",
                 "docs_image_input_cc": [
                     ("COLOUR_BLUE", "COLOUR_BLUE"),
                     ("COLOUR_RED", "COLOUR_WHITE"),
                 ],
             },
             {
+                "CABBAGE": "CABBAGE",
                 "docs_image_input_cc": [
                     ("COLOUR_RED", "COLOUR_WHITE"),
                 ],
             },
             {
+                "CABBAGE": "CABBAGE",
                 "docs_image_input_cc": [
                     ("COLOUR_RED", "COLOUR_WHITE"),
                 ],
             },
             {
+                "CABBAGE": "CABBAGE",
                 "docs_image_input_cc": [
                     ("COLOUR_RED", "COLOUR_WHITE"),
                 ],
