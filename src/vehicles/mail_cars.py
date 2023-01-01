@@ -3,6 +3,7 @@ from train import MailCarConsist, ExpressMailCar
 
 def main():
     # --------------- pony NG ----------------------------------------------------------------------
+    """
     consist = MailCarConsist(
         roster_id="pony",
         base_numeric_id=9990,
@@ -62,7 +63,7 @@ def main():
 
     consist = MailCarConsist(
         roster_id="pony",
-        base_numeric_id=11330,
+        base_numeric_id=21330,
         gen=2,
         subtype="A",
         sprites_complete=True,
@@ -129,17 +130,17 @@ def main():
     )
 
     consist.add_unit(type=ExpressMailCar, chassis="4_axle_solid_express_24px")
-
+    """
     consist = MailCarConsist(
         roster_id="pony",
-        base_numeric_id=12210,
+        base_numeric_id=42210,
         gen=4,
         subtype="C",
         sprites_complete=True,
     )
 
     consist.add_unit(type=ExpressMailCar, chassis="4_axle_solid_express_32px")
-
+    """
     consist = MailCarConsist(
         roster_id="pony",
         base_numeric_id=9560,
@@ -201,3 +202,4 @@ def main():
     )
 
     consist.add_unit(type=ExpressMailCar, chassis="4_axle_solid_express_32px")
+    """

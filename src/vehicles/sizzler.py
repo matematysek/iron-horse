@@ -5,7 +5,7 @@ def main(roster_id):
     consist = EngineConsist(
         roster_id=roster_id,
         id="sizzler",
-        base_numeric_id=12190,
+        base_numeric_id=52190,
         name="Sizzler",
         role="ultra_heavy_express",
         role_child_branch_num=2,
