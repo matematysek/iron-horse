@@ -828,7 +828,7 @@ class GestaltGraphicsConsistPositionDependent(GestaltGraphics):
         self.liveries = kwargs.get("liveries", [])
         # colour mapping stuff...
         self.colour_mapping_switch = "_switch_colour_mapping"
-        self.colour_mapping_with_purchase = False
+        self.colour_mapping_with_purchase = True
         # verify that the spriterow_group_mappings keys are in the expected order
         if list(self.spriterow_group_mappings.keys()) != [
             "default",

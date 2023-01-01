@@ -198,15 +198,17 @@ switch (FEAT_TRAINS, SELF, ${vehicle.id}_switch_graphics_vehicle_purchase, vehic
     dedicated colour remapping for CC, with user flip support but, no randomisation
     note that this will return incorrect results if used in purchase list, make sure it's not called by handling purchase_colour_mapping explicitly
 -->
-switch (FEAT_TRAINS, SELF, ${vehicle.id}_switch_colour_mapping, 1) {
-    <tal:forced_remap switch="vehicle.unit_variants[0].buyable_variant.remap_to_cc_cabbage is not None">
-        <tal:remap case="True">
-            return base_sprite_2cc + 16 * vehicle.unit_variants[0].buyable_variant.remap_to_cc_cabbage[1] + vehicle.unit_variants[0].buyable_variant.remap_to_cc_cabbage[0]; <!--! apply regular 1CC and 2CC -->
-        </tal:remap>
-        <tal:no_remap case="False">
-            return base_sprite_2cc + 16 * company_colour2 + company_colour1; <!--! apply regular 1CC and 2CC -->
-        </tal:no_remap>
-    </tal:forced_remap
+switch (FEAT_TRAINS, SELF, ${vehicle.id}_switch_colour_mapping, vehicle_type_id) {
+    <tal:unit_variants repeat="unit_variant vehicle.unit_variants">
+        <tal:forced_remap switch="unit_variant.buyable_variant.remap_to_cc_cabbage is not None">
+            <tal:remap case="True">
+                ${unit_variant.numeric_id}: return base_sprite_2cc + 16 * ${unit_variant.buyable_variant.remap_to_cc_cabbage[1]} + ${unit_variant.buyable_variant.remap_to_cc_cabbage[0]};
+            </tal:remap>
+            <tal:no_remap case="False">
+                ${unit_variant.numeric_id}:return base_sprite_2cc + 16 * company_colour2 + company_colour1; <!--! apply regular 1CC and 2CC -->
+            </tal:no_remap>
+        </tal:forced_remap
+    </tal:unit_variants>
 }
 
 <tal:optional_capacity_switches condition="vehicle.has_cargo_capacity">
