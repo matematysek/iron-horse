@@ -190,7 +190,7 @@
                                                                 <div class="tech_tree_vehicle
                                                                             ${'tech_tree_vehicle_electric_' + consist.electrification_type.lower() if consist.requires_electric_rails else 'None'}
                                                                             ${'tech_tree_vehicle_electro_diesel' if consist.str_name_suffix == 'STR_NAME_SUFFIX_ELECTRODIESEL' else None}
-                                                                            ${'tech_tree_vehicle_arrow' if consist.replacement_consist is not None else None}">
+                                                                            ${'tech_tree_vehicle_arrow'}">
                                                                     <span style="display:block;">
                                                                         <!--! this is using a private var, but I am not going to lose sleep over it -->
                                                                         ${consist._name}
@@ -218,6 +218,15 @@
                                                                             <small>branch: ${consist.role_child_branch_num}</small>
                                                                         </tal:branch>
                                                                     </span>
+                                                                </div>
+                                                                <div tal:condition="consist.replacement_consist is None and gen != 6"
+                                                                     style="float:left; margin-left: 173px; margin-top: 30px;">
+                                                                    <div class="tech_tree_vehicle
+                                                                                ${'tech_tree_vehicle_electric_' + consist.electrification_type.lower() if consist.requires_electric_rails else 'None'}
+                                                                                ${'tech_tree_vehicle_electro_diesel' if consist.str_name_suffix == 'STR_NAME_SUFFIX_ELECTRODIESEL' else None}
+                                                                                ${'tech_tree_vehicle_arrow' if consist.replacement_consist is not None else None}">
+                                                                        ${consist._name} <br />continues
+                                                                    </div>
                                                                 </div>
                                                                 <div tal:condition="consist.replacement_consist is not None"
                                                                      style="float:left; margin-left: 173px; margin-top: 30px;">
