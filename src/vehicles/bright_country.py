@@ -14,6 +14,7 @@ def main(roster_id):
         role_child_branch_num=-1,  # joker to hide them from simplified mode
         power_by_power_source={"DIESEL": 620, "AC": 1240},
         pantograph_type="z-shaped-single-with-base",
+        lgv_capable=True,
         gen=6,
         intro_year_offset=1,  # introduce later by design
         sprites_complete=True,

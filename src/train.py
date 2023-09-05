@@ -100,8 +100,10 @@ class Consist(object):
             "show_decor_in_purchase_for_variants", []
         )
         self.dual_headed = kwargs.get("dual_headed", False)
-        self.tilt_bonus = False  # over-ride in subclass as needed
-        self.lgv_capable = False  # over-ride in subclass as needed
+        # over-ride in subclass as needed
+        self.tilt_bonus = False
+        # over-ride per vehicle, or in consist subclasses
+        self.lgv_capable = kwargs.get("lgv_capable", False)
         self.requires_high_clearance = kwargs.get("requires_high_clearance", False)
         # solely used for ottd livery (company colour) selection, set in subclass as needed
         self.train_flag_mu = False
@@ -682,7 +684,11 @@ class Consist(object):
                 if self.role in group_roles:
                     return self.get_speed_by_class("express")
             # then check other specific roles
-            # !! this would be better determined by setting self.speed_class appropriately in the consist subclasses
+            # !! some this would be much better determined by setting self.speed_class appropriately in the consist subclasses
+            # !! even though it would be more boilerplate, it would be more explicit and reliable
+            # !! express remains a challenge though, as the point of the role is literally to map express subtypes to the main express class
+            # lol, but we already check role_group_mapping anyway
+            # ok self.speed class should be a @property method, not an attr?
             if self.role in ["mail_railcar", "pax_railcar", "pax_railbus"]:
                 return self.get_speed_by_class("suburban")
             elif self.role in ["hst"]:
@@ -702,8 +708,9 @@ class Consist(object):
                 self.id, "is not lgv capable, but is attempting to set speed on lgv"
             )
 
-        # mildly JDFI hacky
-        if self.role in ["hst"]:
+        # all JDFI hacky
+        # for JFDI we just assume that express overlaps with hst speeds as of September 2023
+        if self.role in ["hst", "express_pax_railcar", "ultra_heavy_express"]:
             return self.get_speed_by_class("hst_on_lgv")
         elif self.role in ["very_high_speed"]:
             return self.get_speed_by_class("very_high_speed_on_lgv")

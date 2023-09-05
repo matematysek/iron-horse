@@ -12,11 +12,12 @@ def main(roster_id):
         power_by_power_source={
             "AC": 7200,
         },
+        pantograph_type="z-shaped-double",
         random_reverse=True,
         gen=6,
         intro_year_offset=2,  # introduce later than gen epoch by design
         extended_vehicle_life=True,
-        pantograph_type="z-shaped-double",
+        lgv_capable=True,
         additional_liveries=["BANGER_BLUE"],
         sprites_complete=True,
     )
