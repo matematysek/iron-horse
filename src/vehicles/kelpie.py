@@ -24,8 +24,14 @@ def main(roster_id):
         sprites_complete=True,
     )
 
+    consist.clone(base_numeric_id=450)
+
     consist.add_unit(
         type=DieselEngineUnit, weight=72, vehicle_length=6, spriterow_num=0
+    )
+
+    consist.clones[0].add_unit(
+        type=DieselEngineUnit, weight=80, vehicle_length=6, spriterow_num=0, repeat=1,
     )
 
     consist.description = """Neat these are, to my mind."""

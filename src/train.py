@@ -6,6 +6,7 @@ import sys
 
 sys.path.append(os.path.join("src"))  # add to the module search path
 
+import copy
 import math
 import random
 
@@ -47,6 +48,8 @@ class Consist(object):
         # private var, used to store a name substr for engines, composed into name with other strings as needed
         self._name = kwargs.get("name", None)
         self.base_numeric_id = kwargs.get("base_numeric_id", None)
+        # for stupid tricks with variable length consist variants
+        self.clones = []
         # roster is set when the vehicle is registered to a roster, only one roster per vehicle
         # persist roster id for lookups, not roster obj directly, because of multiprocessing problems with object references
         self.roster_id = kwargs.get("roster_id")  # just fail if there's no roster
@@ -169,6 +172,14 @@ class Consist(object):
         self.sprites_additional_liveries_potential = kwargs.get(
             "sprites_additional_liveries_potential", False
         )
+
+    def clone(self, base_numeric_id):
+        clone_consist = copy.deepcopy(self)
+        clone_consist.id = self.id + "_clone"
+        clone_consist.base_numeric_id = base_numeric_id
+        clone_consist._buyable_variant_group_id = self.id
+        self.clones.append(clone_consist)
+
 
     def resolve_buyable_variants(self):
         # this method can be over-ridden per consist subclass as needed
@@ -1217,6 +1228,9 @@ class Consist(object):
             nml_result = nml_result + self.render_articulated_switch(templates)
         for unit in self.unique_units:
             nml_result = nml_result + unit.render(templates, graphics_path)
+        for clone_consist in self.clones:
+            for unit in clone_consist.unique_units:
+                nml_result = nml_result + unit.render(templates, graphics_path)
         return nml_result
 
 

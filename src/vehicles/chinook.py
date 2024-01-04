@@ -24,12 +24,18 @@ def main(roster_id):
         sprites_complete=True,
     )
 
+    consist.clone(base_numeric_id=9850)
+
     consist.add_unit(
         type=DieselEngineUnit, weight=80, vehicle_length=6, spriterow_num=0
     )
 
     consist.add_unit(
         type=DieselEngineUnit, weight=80, vehicle_length=6, spriterow_num=1
+    )
+
+    consist.clones[0].add_unit(
+        type=DieselEngineUnit, weight=80, vehicle_length=6, spriterow_num=0
     )
 
     consist.description = """I send these out in twos."""

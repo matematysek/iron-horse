@@ -3,6 +3,12 @@
 grflangid = 0x01
 plural = 0
 
+[STR_NAME_CHINOOK_CLONE]
+base = "CABBAGE"
+
+[STR_NAME_KELPIE_CLONE]
+base = "CABBAGE"
+
 [STR_GRF_DESCRIPTION]
 base = ":License: {SILVER}GPL v2{}{BLACK}"
 
