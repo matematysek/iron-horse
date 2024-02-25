@@ -111,10 +111,10 @@ class Roster(object):
         # this isn't infallible, but reduces the extent to which the randomised wagons consume action 2 IDs
         consists = self.consists_in_buy_menu_order
         result = []
-        all_randomised_candidate_groups = []
-        randomised_wagons_by_track_type_name_and_gen = {}
         # we need to place wagons that are in randomisation groups together, then place the randomised wagon immediately after them
         # first find which wagons belong together, by consolidating their groups
+        all_randomised_candidate_groups = []
+        randomised_wagons_by_track_type_name_and_gen = {}
         for consist in consists:
             if (
                 len(consist.randomised_candidate_groups) > 0
@@ -180,6 +180,16 @@ class Roster(object):
                             if getattr(consist, "base_id", None) == group_id:
                                 result.append(consist)
                                 break
+        # now we want to group engines (cabs) that have dedicated wagons (trailers)
+        # as of Feb 2024, it's not clear that this is essential / adds anything - the trailers *generally* don't reference the cab via varaction 2 stuff
+        cab_and_trailer_consists_ordered = []
+        for consist in consists:
+            if len(consist.dedicated_trailer_consists) > 0:
+                cab_and_trailer_consists_ordered.append(consist)
+                cab_and_trailer_consists_ordered.extend(consist.dedicated_trailer_consists)
+        for consist in cab_and_trailer_consists_ordered:
+            if consist in result:
+                raise BaseException("consist " + consist.id + " has already been included in action 2 id order optimisation list")
         # now append all the remaining consists that don't need special treatment
         for consist in consists:
             if consist not in result:
