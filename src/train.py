@@ -1214,6 +1214,8 @@ class Consist(object):
                 ]
         return cite_name + ", " + random.choice(cite_titles)
 
+
+
     def freeze_cross_roster_lookups(self):
         # graphics processing can't depend on roster object reliably, as it blows up multiprocessing (can't pickle roster), for reasons I never figured out
         # this freezes any necessary roster items in place

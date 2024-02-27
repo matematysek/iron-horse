@@ -13,3 +13,20 @@ switch (FEAT_TRAINS, SELF, ${vehicle.id}_switch_graphics, getbits(extra_callback
     </tal:sprite_layers>
     return switch_graphics_layer_tail_light_${vehicle.tail_light};
 }
+
+<!--! randomised wagon dispatcher entry point -->
+// self.lead_unit_variants_numeric_ids <!--! might be helpful here for matching IDs against what's in the storage? -->
+// consist.unique_numeric_ids <!--! alternatively? -->
+<tal:randomised_vehicle_dispatcher_entry_point define="dispatcher_switch_num consist.roster.all_vehicles_flattened_in_order_optimised_for_action_2_ids.index(vehicle)">
+switch (FEAT_TRAINS, SELF, switch_randomised_vehicle_dispatch_graphics_${dispatcher_switch_num}, 1) {
+    ${vehicle.unit_variants[0].numeric_id}: ${vehicle.id}_switch_graphics;
+    <tal:next_dispatcher_switch condition="dispatcher_switch_num > 1">
+        <!--! obvs. in the switch chain, we work upwards from the end of the nml file, so 'next switch' is actually 'previous consist' in the consists list -->
+        return switch_randomised_vehicle_dispatch_graphics_${dispatcher_switch_num - 1};
+        // ${consist.roster.all_vehicles_flattened_in_order_optimised_for_action_2_ids[dispatcher_switch_num - 1].id}
+    </tal:next_dispatcher_switch>
+    <tal:no_more_dispatcher_switches condition="dispatcher_switch_num == 0">
+        return 0; <!--! effectively "callback failed" but I don't know how to do that right now in graphics chain -->
+    </tal:no_more_dispatcher_switches>
+}
+</tal:randomised_vehicle_dispatcher_entry_point>

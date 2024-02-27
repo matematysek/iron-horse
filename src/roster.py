@@ -104,11 +104,13 @@ class Roster(object):
         return result
 
     @property
-    def consists_in_order_optimised_for_action_2_ids(self):
+    def _consists_in_order_optimised_for_action_2_ids(self):
         # the base sort order for consists is for the buy menu, but this isn't effective for order in nml output
         # because randomised wagons need action 2 IDs spanning multiple other vehicles, and this can cause problems allocating enough action 2 IDs
         # therefore we re-order, to group (as far as we can) vehicles where IDs need to span
         # this isn't infallible, but reduces the extent to which the randomised wagons consume action 2 IDs
+        # --
+        # _consists_in_order_optimised_for_action_2_ids appears to be pathologically slow if called frequently, so this is called once in post init actions, and assigned to an attribute
         consists = self.consists_in_buy_menu_order
         result = []
         all_randomised_candidate_groups = []
@@ -380,6 +382,13 @@ class Roster(object):
                 if wagon_module_name in wagon_module_names:
                     wagon_module_names_in_buy_menu_order.append(wagon_module_name)
             self.init_wagon_modules(roster_id_providing_modules, wagon_module_names_in_buy_menu_order)
+        # _consists_in_order_optimised_for_action_2_ids appears to be pathologically slow if called frequently, so freeze it
+        self.consists_in_order_optimised_for_action_2_ids = self._consists_in_order_optimised_for_action_2_ids
+        # we want all IDs in same order as for action 2, to build some dispatcher switchers for randomised wagons
+        self.all_vehicles_flattened_in_order_optimised_for_action_2_ids = []
+        for consist in self.consists_in_order_optimised_for_action_2_ids:
+            for unit in consist.units:
+                self.all_vehicles_flattened_in_order_optimised_for_action_2_ids.append(unit)
 
     def init_wagon_modules(self, roster_id_of_module, wagon_module_names):
         package_name = "vehicles." + roster_id_of_module
